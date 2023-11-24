@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from database import engine
+from app.database import engine
 from app.models.models import Base
-from app.endpoints.components import components, semiproducts, products, orders, invoices
+from app.endpoints import components, semiproducts, products, orders, invoices
 
 app = FastAPI()
 

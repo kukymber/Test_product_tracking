@@ -8,7 +8,7 @@ from app.schemas.schemas import ComponentCreate, ComponentUpdate, ComponentCreat
 router = APIRouter()
 
 
-@router.get("/components/", response_model=List[Component])
+@router.get("/components/", response_model=List[ComponentBase])
 def read_components(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     try:
         components = db.query(Component).offset(skip).limit(limit).all()
@@ -30,7 +30,7 @@ def create_component(component: ComponentCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.put("/components/{component_id}", response_model=Component)
+@router.put("/components/{component_id}", response_model=ComponentBase)
 def update_component(component_id: int, component: ComponentUpdate, db: Session = Depends(get_db)):
     db_component = db.query(Component).filter(Component.id == component_id).first()
     if db_component is None:
@@ -46,7 +46,7 @@ def update_component(component_id: int, component: ComponentUpdate, db: Session 
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.delete("/components/{component_id}", response_model=Component)
+@router.delete("/components/{component_id}", response_model=ComponentBase)
 def delete_component(component_id: int, db: Session = Depends(get_db)):
     db_component = db.query(Component).filter(Component.id == component_id).first()
     if db_component is None:
