@@ -3,8 +3,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
 
-from database.py import Base
-from mixsins import IdMixin, TimestampMixin, AuditMixin, SoftDeleteMixin
+from app.database import Base
+from app.mixsins.mixins import IdMixin, TimestampMixin, AuditMixin, SoftDeleteMixin
 
 
 """Add. relationship"""

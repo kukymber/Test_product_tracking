@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-
+from typing import Union
 
 class ComponentBase(BaseModel):
     name: str
@@ -11,8 +11,8 @@ class ComponentCreate(ComponentBase):
 
 
 class ComponentUpdate(ComponentBase):
-    pass
-
+    name: Union[str, None] = None
+    quantity: Union[float, None] = None
 
 class Component(ComponentBase):
     id: int
