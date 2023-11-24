@@ -3,9 +3,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
 
+from database.py import Base
 from mixsins import IdMixin, TimestampMixin, AuditMixin, SoftDeleteMixin
-
-Base = declarative_base()
 
 
 """Add. relationship"""
@@ -19,6 +18,18 @@ components_products = Table(
 semi_products_products = Table(
     'semi_products_products', Base.metadata,
     Column('semi_product_id', Integer, ForeignKey('semi_products.id'), primary_key=True),
+    Column('product_id', Integer, ForeignKey('products.id'), primary_key=True)
+)
+
+invoice_components = Table(
+    'invoice_components', Base.metadata,
+    Column('invoice_id', Integer, ForeignKey('invoices.id'), primary_key=True),
+    Column('component_id', Integer, ForeignKey('components.id'), primary_key=True)
+)
+
+order_products = Table(
+    'order_products', Base.metadata,
+    Column('order_id', Integer, ForeignKey('orders.id'), primary_key=True),
     Column('product_id', Integer, ForeignKey('products.id'), primary_key=True)
 )
 
