@@ -59,6 +59,7 @@ class Product(Base, IdMixin, TimestampMixin, AuditMixin, SoftDeleteMixin):
     name = Column(String, unique=True)
     semi_products = relationship("SemiProduct", secondary=semi_products_products, back_populates="products")
     orders = relationship("Order", secondary=order_products, back_populates="products")
+    components = relationship("Component", secondary=components_products, back_populates="products")
 
 
 class Invoice(Base, IdMixin, TimestampMixin, AuditMixin, SoftDeleteMixin):
