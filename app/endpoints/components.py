@@ -2,16 +2,16 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from typing import List
 from app.database import get_db
-from app.models.models import Component
-from app.schemas.component import ComponentCreate, ComponentUpdate, ComponentCreate, ComponentBase, Component
+from app.models.models import Component as DbComponent
+from app.schemas.component import ComponentCreate, ComponentUpdate, ComponentCreate, ComponentBase
 
 router = APIRouter()
 
 
-@router.get("/components/", response_model=List[Component])
+@router.get("/components/", response_model=List[ComponentBase])
 def read_components(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     try:
-        components = db.query(Component).offset(skip).limit(limit).all()
+        components = db.query(DbComponent).offset(skip).limit(limit).all()
         return components
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -19,7 +19,7 @@ def read_components(skip: int = 0, limit: int = 100, db: Session = Depends(get_d
 
 @router.post("/components/", response_model=ComponentCreate)
 def create_component(component: ComponentCreate, db: Session = Depends(get_db)):
-    db_component = Component(**component.dict())
+    db_component = DbComponent(**component.dict())
     db.add(db_component)
     try:
         db.commit()
@@ -32,7 +32,7 @@ def create_component(component: ComponentCreate, db: Session = Depends(get_db)):
 
 @router.put("/components/{component_id}", response_model=ComponentBase)
 def update_component(component_id: int, component: ComponentUpdate, db: Session = Depends(get_db)):
-    db_component = db.query(Component).filter(Component.id == component_id).first()
+    db_component = db.query(DbComponent).filter(Component.id == component_id).first()
     if db_component is None:
         raise HTTPException(status_code=404, detail="Component not found")
     try:
@@ -48,7 +48,7 @@ def update_component(component_id: int, component: ComponentUpdate, db: Session 
 
 @router.delete("/components/{component_id}", response_model=ComponentBase)
 def delete_component(component_id: int, db: Session = Depends(get_db)):
-    db_component = db.query(Component).filter(Component.id == component_id).first()
+    db_component = db.query(DbComponent).filter(Component.id == component_id).first()
     if db_component is None:
         raise HTTPException(status_code=404, detail="Component not found")
     try:
