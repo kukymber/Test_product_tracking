@@ -3,8 +3,6 @@
 ..idea/inspectionProfiles/profiles_settings.xml,1/e/1e9075f5bf079c01ef2c910709e91a497d262080
 ;
 app/main.py,6/0/60a964aea4a6760d2f0fe80a7725ed9d569edd6c
-F
-app/schemas/schemas.py,8/7/87c5b0b24cce6c7ff09ab6e9574a1b45c1911ce5
 D
 app/models/models.py,0/7/075003309d2bb277325969e1cc95b7e662c3be5c
 ?
@@ -15,10 +13,6 @@ E
 app/mixsins/mixins.py,5/a/5a569a6f658888496bb8a5ff1a5aa8fcf6b42333
 M
 app/endpoints/semiproducts.py,2/8/28f9d1e96276d972501bdcfb00bf384d29a31d8c
-F
-app/endpoints/order.py,7/8/78edc14da5c3b82122a6eadec778abcf845a7d2b
-H
-app/endpoints/invoice.py,2/8/284f6aca4e52f6ee10e1459d8998aed959558f1d
 S
 #.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
 ]
@@ -86,8 +80,6 @@ Q.idea/sonarlint/securityhotspotstore/8/8/88a9255124c95bdc913197c120a8d560edc59c
 Å
 Q.idea/sonarlint/securityhotspotstore/8/9/89985a72863407ec537059cd31903ef25133c043,5/3/53912c62a5848ce2ba66c0f97be0fd4437df1ba5
 w
-G.idea/sonarlint/issuestore/b/3/b3e84a4bdaede4e01da6562d3f57918fb4e36fc2,2/4/24f8e35acdab30f80a3e3c4e6251fb35b36279f4
-w
 G.idea/sonarlint/issuestore/b/6/b639c98bb243db7f60afa5e52adc0672e796e30f,9/2/929c65eb05ad34f86a03eeccd51a415dfe36cc86
 w
 G.idea/sonarlint/issuestore/b/7/b708aad62f0501c0cda351be171cb414dbef3c1f,a/1/a116dcd872553c99f570c536552149572dbf5ae2
@@ -107,8 +99,6 @@ w
 G.idea/sonarlint/issuestore/2/9/29ae182ee12349d08c0f38b603755d73578134b7,b/d/bd80180eb4ad2c1cd6600f966c2902584cb3adc4
 w
 G.idea/sonarlint/issuestore/3/0/30a6d568889e1d0c5018510faf31336dfa3481eb,3/7/37861c3c939358db47f5ee93d6c7cf059a1492af
-Å
-Q.idea/sonarlint/securityhotspotstore/b/3/b3e84a4bdaede4e01da6562d3f57918fb4e36fc2,1/e/1e3856c37463fea599c6ccac0849a01e1c4e81b9
 w
 G.idea/sonarlint/issuestore/3/4/348fb6940be1957c79ac9bd023c1b59c0d9ec66b,d/d/dd410dbe5e9206482f17f492543a5748dd0f74c3
 Å

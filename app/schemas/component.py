@@ -3,6 +3,7 @@ from typing import Union
 
 
 class ComponentBase(BaseModel):
+    id: int
     name: str
     quantity: float
 
