@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from app.database import get_db
 from app.models.models import Component
-from app.schemas.schemas import ComponentCreate, ComponentUpdate, ComponentCreate, ComponentBase
+from app.schemas.component import ComponentCreate, ComponentUpdate, ComponentCreate, ComponentBase
 
 router = APIRouter()
 

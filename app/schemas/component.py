@@ -10,8 +10,6 @@ class ComponentBase(BaseModel):
 class ComponentCreate(ComponentBase):
     pass
 
-
-
 class ComponentUpdate(ComponentBase):
     name: Union[str, None] = None
     quantity: Union[float, None] = None
@@ -19,6 +17,7 @@ class ComponentUpdate(ComponentBase):
 
 class Component(ComponentBase):
     id: int
+
 
     class Config:
         from_attributes = True
