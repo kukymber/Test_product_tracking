@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Union, Optional
+from app.schemas.component import Component
 
 
 class SemiProductBase(BaseModel):
@@ -7,17 +8,17 @@ class SemiProductBase(BaseModel):
 
 
 class SemiProductCreate(SemiProductBase):
-    component_ids: List[int]  # Список ID компонентов
+    component_ids: List[int]
 
 
 class SemiProductUpdate(BaseModel):
     name: Union[str, None] = None
-    component_ids: Union[List[int], None] = None
+    components: Optional[List[Component]] = []
 
 
 class SemiProduct(SemiProductBase):
     id: int
-    components: List[Component] = []  # Список компонентов
+    components: Optional[List[Component]] = []
 
     class Config:
         from_attributes = True

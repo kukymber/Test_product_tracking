@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from app.database import get_db
 from app.models.models import SemiProduct, Component
-from app.schemas.semiproduct import SemiProductCreate, SemiProductUpdate, SemiProductBase
+from app.schemas.semiproduct import SemiProductCreate, SemiProductUpdate, SemiProductBase, SemiProduct
 
 router = APIRouter()
 
@@ -16,9 +16,18 @@ def read_semiproducts(skip: int = 0, limit: int = 100, db: Session = Depends(get
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.post("/semiproducts/", response_model=SemiProductBase)
+
+from app.models.models import SemiProduct, Component
+
+
+@router.post("/semiproducts/", response_model=SemiProductCreate)
 def create_semiproduct(semiproduct: SemiProductCreate, db: Session = Depends(get_db)):
-    new_semiproduct = SemiProduct(**semiproduct.dict())
+    new_semiproduct = SemiProduct(name=semiproduct.name)
+
+    if semiproduct.component_ids:
+        components = db.query(Component).filter(Component.id.in_(semiproduct.component_ids)).all()
+        new_semiproduct.components = components
+
     db.add(new_semiproduct)
     try:
         db.commit()
@@ -28,7 +37,8 @@ def create_semiproduct(semiproduct: SemiProductCreate, db: Session = Depends(get
         db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.put("/semiproducts/{semiproduct_id}", response_model=SemiProductBase)
+
+@router.put("/semiproducts/{semiproduct_id}", response_model=SemiProductUpdate)
 def update_semiproduct(semiproduct_id: int, semiproduct: SemiProductUpdate, db: Session = Depends(get_db)):
     db_semiproduct = db.query(SemiProduct).filter(SemiProduct.id == semiproduct_id).first()
     if db_semiproduct is None:

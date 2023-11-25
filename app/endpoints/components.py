@@ -3,12 +3,12 @@ from sqlalchemy.orm import Session
 from typing import List
 from app.database import get_db
 from app.models.models import Component
-from app.schemas.component import ComponentCreate, ComponentUpdate, ComponentCreate, ComponentBase
+from app.schemas.component import ComponentCreate, ComponentUpdate, ComponentCreate, ComponentBase, Component
 
 router = APIRouter()
 
 
-@router.get("/components/", response_model=List[ComponentBase])
+@router.get("/components/", response_model=List[Component])
 def read_components(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     try:
         components = db.query(Component).offset(skip).limit(limit).all()
