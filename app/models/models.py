@@ -21,6 +21,12 @@ semi_products_products = Table(
     Column('product_id', Integer, ForeignKey('products.id'), primary_key=True)
 )
 
+semi_products_components = Table(
+    'semi_products_components', Base.metadata,
+    Column('semi_product_id', Integer, ForeignKey('semi_products.id'), primary_key=True),
+    Column('component_id', Integer, ForeignKey('components.id'), primary_key=True)
+)
+
 invoice_components = Table(
     'invoice_components', Base.metadata,
     Column('invoice_id', Integer, ForeignKey('invoices.id'), primary_key=True),
@@ -40,7 +46,7 @@ class Component(Base, IdMixin, TimestampMixin, AuditMixin, SoftDeleteMixin):
     __tablename__ = 'components'
     name = Column(String, unique=True)
     quantity = Column(Float)
-    semi_products = relationship("SemiProduct", back_populates="component")
+    semi_products = relationship("SemiProduct", secondary=semi_products_components, back_populates="components")
     products = relationship("Product", secondary=components_products, back_populates="components")
     invoices = relationship("Invoice", secondary=invoice_components, back_populates="components")
 
@@ -48,9 +54,8 @@ class Component(Base, IdMixin, TimestampMixin, AuditMixin, SoftDeleteMixin):
 class SemiProduct(Base, IdMixin, TimestampMixin, AuditMixin, SoftDeleteMixin):
     __tablename__ = 'semi_products'
     name = Column(String, unique=True)
-    component_id = Column(Integer, ForeignKey('components.id'))
     quantity = Column(Float)
-    component = relationship("Component", back_populates="semi_products")
+    components = relationship("Component", secondary=semi_products_components, back_populates="semi_products")
     products = relationship("Product", secondary=semi_products_products, back_populates="semi_products")
 
 
