@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from typing import List
 from app.database import get_db
 from app.models.models import SemiProduct as DbSemiProduct, Component as DbComponent
@@ -8,11 +8,11 @@ from app.schemas.semiproduct import SemiProductCreate, SemiProductUpdate, SemiPr
 router = APIRouter()
 
 
-# Используем модель Pydantic для ответа
 @router.get("/semiproducts/", response_model=List[SemiProduct])
 def read_semiproducts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     try:
-        semiproducts = db.query(DbSemiProduct).offset(skip).limit(limit).all()
+        semiproducts = db.query(DbSemiProduct).options(joinedload(DbSemiProduct.components)).offset(skip).limit(
+            limit).all()
         return semiproducts
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
