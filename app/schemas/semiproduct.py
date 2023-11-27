@@ -3,6 +3,7 @@ from typing import List, Union, Optional
 from app.schemas.component import Component
 
 
+
 class SemiProductBase(BaseModel):
     name: str
 
@@ -13,12 +14,13 @@ class SemiProductCreate(SemiProductBase):
 
 class SemiProductUpdate(BaseModel):
     name: Union[str, None] = None
-    components: Optional[List[Component]] = []
+    component_ids: Optional[List[int]]
 
 
 class SemiProduct(SemiProductBase):
     id: int
-    components: Optional[List[Component]] = []
+    name: str
+    components: List[Component]
 
     class Config:
         from_attributes = True
