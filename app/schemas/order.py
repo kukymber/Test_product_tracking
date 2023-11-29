@@ -13,7 +13,6 @@ class OrderCreate(BaseModel):
 
 class Order(BaseModel):
     items: Optional[List[OrderItem]]
-    id: int
 
     class Config:
         from_attributes = True
