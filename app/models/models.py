@@ -6,7 +6,6 @@ import datetime
 from app.database import Base
 from app.mixsins.mixins import IdMixin, TimestampMixin, AuditMixin, SoftDeleteMixin
 
-
 """Add. relationship"""
 
 components_products = Table(
@@ -38,6 +37,13 @@ order_products = Table(
     Column('order_id', Integer, ForeignKey('orders.id'), primary_key=True),
     Column('product_id', Integer, ForeignKey('products.id'), primary_key=True)
 )
+order_items = Table(
+    'order_items',
+    Base.metadata,
+    Column('order_id', Integer, ForeignKey('orders.id'), primary_key=True),
+    Column('product_id', Integer, ForeignKey('products.id'), primary_key=True),
+    Column('quantity', Integer, nullable=False)
+)
 
 """Models"""
 
@@ -65,6 +71,7 @@ class Product(Base, IdMixin, TimestampMixin, AuditMixin, SoftDeleteMixin):
     semi_products = relationship("SemiProduct", secondary=semi_products_products, back_populates="products")
     orders = relationship("Order", secondary=order_products, back_populates="products")
     components = relationship("Component", secondary=components_products, back_populates="products")
+    items = relationship("Order", secondary=order_items, back_populates="products")
 
 
 class Invoice(Base, IdMixin, TimestampMixin, AuditMixin, SoftDeleteMixin):
@@ -80,3 +87,4 @@ class Order(Base, IdMixin, TimestampMixin, AuditMixin, SoftDeleteMixin):
     order_date = Column(DateTime, default=datetime.datetime.utcnow)
     product_details = Column(Text)
     products = relationship("Product", secondary=order_products, back_populates="orders")
+    items = relationship("Product", secondary=order_items, back_populates="orders")
