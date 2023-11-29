@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import List, Optional, Dict
 
 
 class OrderItem(BaseModel):
@@ -8,12 +8,12 @@ class OrderItem(BaseModel):
 
 
 class OrderCreate(BaseModel):
-    items: List[OrderItem]
+    pass
 
 
 class Order(BaseModel):
+    items: Optional[List[OrderItem]]
     id: int
-    items: List[OrderItem]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
