@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.models import Order as DbOrder, Product as DbProduct, Component as DbComponent
+from typing import List
+from app.models.models import Order as DbOrder, Product as DbProduct, Component as DbComponent
 from app.schemas.order import OrderCreate, Order
 
 router = APIRouter()
@@ -20,13 +21,16 @@ def create_order(order_create: OrderCreate, db: Session = Depends(get_db)):
             raise HTTPException(status_code=404, detail=f"Product with id {item.product_id} not found")
 
         for component in product.components:
+            if component.quantity < item.quantity:
+                raise HTTPException(status_code=400, detail=f"Not enough stock for component {component.id}")
             component.quantity -= item.quantity
             db.add(component)
 
         for semi_product in product.semi_products:
-            for component in semi_product.components:
-                component.quantity -= item.quantity
-                db.add(component)
+            if semi_product.quantity < item.quantity:
+                raise HTTPException(status_code=400, detail=f"Not enough stock for semi-product {semi_product.id}")
+            semi_product.quantity -= item.quantity
+            db.add(semi_product)
 
         new_order.products.append(product)
 
