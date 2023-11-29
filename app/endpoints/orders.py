@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.post("/orders/", response_model=Order)
-def create_order(order_create: OrderCreate, db: Session = Depends(get_db)):
+def create_order(order_create: Order, db: Session = Depends(get_db)):
     new_order = DbOrder()
     db.add(new_order)
     db.commit()
